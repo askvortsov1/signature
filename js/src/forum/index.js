@@ -25,12 +25,12 @@ app.initializers.add('signature', () => {
     });
 
     extend(CommentPost.prototype, 'view', function (vnode) {
-        const Signature = this.attrs.post.user().data.attributes.signature || false;
+        if (this.attrs.post.user()) {
+            const Signature = this.attrs.post.user().data.attributes.signature;
 
-        if (Signature) {
-            vnode.children.push(m('div.SignatureWrapper', {}, m.trust(Signature)));
+            if (Signature) {
+                vnode.children.push(m('div.SignatureWrapper', {}, m.trust(Signature)));
+            }
         }
-
-        return vnode;
     });
 });
